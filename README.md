@@ -12,13 +12,13 @@ Your model is now deployed as a cloud service.
 **Base URL**
 
 ```
-https://<your-render-app>.onrender.com
+https://lungs-disease-diagnosis-2.onrender.com
 ```
 
-**Swagger Docs**
+**Swagger Docs (Interactive UI)**
 
 ```
-https://<your-render-app>.onrender.com/docs
+https://lungs-disease-diagnosis-2.onrender.com/docs
 ```
 
 **Prediction Endpoint**
@@ -123,18 +123,6 @@ Use **POST /predict** to upload X-ray images.
 
 ## ☁️ Render Deployment
 
-### Required Files
-
-Create a file called:
-
-`runtime.txt`
-
-```
-python-3.10.13
-```
-
----
-
 ### Render Commands
 
 | Field          | Value                                         |
@@ -142,10 +130,6 @@ python-3.10.13
 | Root Directory | `.`                                           |
 | Build Command  | `pip install -r requirements.txt`             |
 | Start Command  | `uvicorn app:app --host 0.0.0.0 --port $PORT` |
-
-Then click:
-
-> **Manual Deploy → Clear Build Cache & Deploy**
 
 ---
 
@@ -164,7 +148,7 @@ Then click:
 
 * Do NOT commit `.venv/` or `genai-env/` folders.
 * Always bind to `$PORT` in production.
-* Torch requires Python ≤ 3.10.
+* Torch compatibility handled for cloud runtime.
 
 ---
 
