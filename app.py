@@ -12,7 +12,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Initialize and load model weights
 model = Net().to(device)
-model.load_state_dict(torch.load("xray_model.pth", map_location=device))
+model.load_state_dict(torch.load("xray_model.pth", map_location=device, weights_only=True))
 model.eval()
 
 # Transformations
