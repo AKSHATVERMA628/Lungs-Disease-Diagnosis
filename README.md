@@ -1,100 +1,184 @@
-#  Xray Lung Classifier
+# 🩻 X-Ray Lung Disease Diagnosis (Pneumonia Detection)
 
-## Problem statement
-Pneumonia is an inflammatory condition of the lung affecting primarily the small air sacs known as alveoli.Symptoms typically include some combination of productive or dry cough, chest pain, fever and difficulty breathing. The severity of the condition is variable. Pneumonia is usually caused by infection with viruses or bacteria and less commonly by other microorganisms, certain medications or conditions such as autoimmune diseases.Risk factors include cystic fibrosis, chronic obstructive pulmonary disease (COPD), asthma, diabetes, heart failure, a history of smoking, a poor ability to cough such as following a stroke and a weak immune system. Diagnosis is often based on symptoms and physical examination. Chest X-ray, blood tests, and culture of the sputum may help confirm the diagnosis.The disease may be classified by where it was acquired, such as community- or hospital-acquired or healthcare-associated pneumonia.
-Our task is to create a API whichs predict whether the given images are penumonia or not.
+A deep learning–based **chest X-ray classification system** that predicts whether a patient is suffering from **Pneumonia** or not.
+The system is built using a **custom CNN in PyTorch**, exposed via a **FastAPI REST API**, and deployed to the cloud using **Render**.
 
-## Solution Proposed
-The solution proposed for the above problem is that we have used Computer vision to solve the above problem to classify the data. We have used the Pytorch
-framework to solve the above problem also we have have created our custom CNN network with the help of pytorch. Then we have created a API which takes in the images and predicts wheter a person is having Pneumonia or not. Then we have dockerized the application and deployed the model on AWS cloud.
+---
 
+## 🚀 Live API (Render)
 
-![xray_arch](https://user-images.githubusercontent.com/71321529/216753362-aeb34400-d21d-4b21-b2ce-63b86a47b594.jpg)
+Your model is now deployed as a cloud service.
 
-## Dataset used
-The dataset was shared by Apollo diagnostic center for research purpose. So we hvae created a POC with the given data.
-
-## Tech Stack Used
-1. Python 
-2. FastAPI 
-3. Pytorch
-4. Docker
-5. AWS
-6. Azure
-
-## Infrastructure required
-1. AWS S3
-2. AWS App Runner
-3. Github Actions
-
-## How to run
-
-Step 1. Download the zip file
-```
-Download the zip file and extract it to a folder.
-```
-Step 2. Create a conda environment.
-```
-conda create -p env python=3.8 -y
-```
-```
-conda activate ./env
-````
-Step 3. Install the requirements 
-```
-pip install -r requirements.txt
-```
-Step 4. Export the environment variable
-```bash
-export AWS_ACCESS_KEY_ID=<AWS_ACCESS_KEY_ID>
-
-export AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY>
-
-export AWS_DEFAULT_REGION=<AWS_DEFAULT_REGION>
+**Base URL**
 
 ```
-Step 5. Run the application server
-```
-python app.py
-```
-Step 6. Train application
-```bash
-http://localhost:8001/train
-```
-Step 7. Prediction application
-```bash
-http://localhost:8001/predict
-```
-## Run locally
-
-1. Check if the Dockerfile is available in the project directory
-
-2. Build the Docker image
-```
-docker build -t xray_classification .
+https://<your-render-app>.onrender.com
 ```
 
-3. Run the Docker image
+**Swagger Docs**
+
 ```
-docker run -d -p 8001:8001 -e AWS_ACCESS_KEY_ID=<AWS_ACCESS_KEY_ID> -e AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY> xray_classifier
+https://<your-render-app>.onrender.com/docs
 ```
 
-## Models Used
-* Custom CNN architecture
+**Prediction Endpoint**
 
-## `xray` is the main package folder which contains 
+```
+POST /predict
+```
 
+Upload a chest X-ray and receive the diagnosis instantly.
 
-**Components** : Contains all components of Deep Learning(CV) Project
-- data_ingestion
-- data_transformation
-- model_training
-- model_evaluation
-- model_pusher
+---
 
+## 📌 Problem Statement
 
-**Custom Logger and Exceptions** are used in the Project for better debugging purposes.
+Pneumonia is an inflammatory condition of the lungs affecting the alveoli.
+Symptoms include cough, fever, chest pain, and difficulty breathing.
+Diagnosis is often confirmed using **Chest X-rays**.
 
-## Conclusion
-- The project we have created can also be in real-life by doctors to check whether the person is having Pneumonia or not. It will help doctors to take
-better decisions.
+Our goal is to build an **AI-powered API** that can automatically classify X-ray images as:
+
+* **Normal**
+* **Pneumonia**
+
+to assist doctors in faster diagnosis.
+
+---
+
+## 💡 Solution Overview
+
+* Custom **CNN model built with PyTorch**
+* Image preprocessing with TorchVision
+* Inference through a **FastAPI REST service**
+* Dockerized & cloud-ready
+* **Deployed on Render** with dynamic port binding
+
+---
+
+## 🧠 Model Architecture
+
+![xray\_arch](https://user-images.githubusercontent.com/71321529/216753362-aeb34400-d21d-4b21-b2ce-63b86a47b594.jpg)
+
+---
+
+## 📊 Dataset
+
+The dataset was provided by **Apollo Diagnostic Center** for research purposes.
+This project is a **Proof of Concept (POC)** based on that data.
+
+---
+
+## 🧩 Tech Stack
+
+* **Python**
+* **FastAPI**
+* **PyTorch**
+* **TorchVision**
+* **Docker**
+* **AWS**
+* **Azure**
+* **Render (Cloud Hosting)**
+
+---
+
+## 📂 Project Structure
+
+```
+Lungs-Disease-Diagnosis/
+├── app.py
+├── xray_model.pth
+├── xray/
+│   └── ml/model/arch.py
+├── requirements.txt
+├── runtime.txt
+└── README.md
+```
+
+---
+
+## ⚙️ Run Locally
+
+### 1️⃣ Activate environment
+
+```powershell
+.venv\Scripts\activate
+```
+
+### 2️⃣ Start API server
+
+```powershell
+uvicorn app:app --host 0.0.0.0 --port 8001
+```
+
+### 3️⃣ Open Swagger
+
+```
+http://127.0.0.1:8001/docs
+```
+
+Use **POST /predict** to upload X-ray images.
+
+---
+
+## ☁️ Render Deployment
+
+### Required Files
+
+Create a file called:
+
+`runtime.txt`
+
+```
+python-3.10.13
+```
+
+---
+
+### Render Commands
+
+| Field          | Value                                         |
+| -------------- | --------------------------------------------- |
+| Root Directory | `.`                                           |
+| Build Command  | `pip install -r requirements.txt`             |
+| Start Command  | `uvicorn app:app --host 0.0.0.0 --port $PORT` |
+
+Then click:
+
+> **Manual Deploy → Clear Build Cache & Deploy**
+
+---
+
+## 🧪 Example Response
+
+```json
+{
+  "prediction_index": 1,
+  "prediction_label": "Pneumonia"
+}
+```
+
+---
+
+## ⚠️ Important Notes
+
+* Do NOT commit `.venv/` or `genai-env/` folders.
+* Always bind to `$PORT` in production.
+* Torch requires Python ≤ 3.10.
+
+---
+
+## 🔮 Future Enhancements
+
+* Multi-class lung disease detection
+* Grad-CAM heatmaps
+* Video & batch inference
+* Doctor dashboard UI
+
+---
+
+## 🎯 Conclusion
+
+This system demonstrates how **AI + Cloud + APIs** can support medical diagnosis.
+It provides fast, accurate predictions that can assist healthcare professionals in real-world decision-making.
+
