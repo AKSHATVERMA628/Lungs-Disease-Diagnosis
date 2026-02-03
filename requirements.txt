@@ -11,7 +11,7 @@
 # uvicorn
 
 torch==2.5.1
-torchvision==0.20.1
+torchvision==0.21.0
 fastapi
 uvicorn
 pillow
@@ -19,4 +19,5 @@ python-multipart
 tqdm
 matplotlib
 opencv-python-headless
+
 
